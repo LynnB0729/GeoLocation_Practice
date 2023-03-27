@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather API Practice</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        p {
+            text-align: center;
+            color: midnightblue;
+        }
+
+        h1 {
+            text-align: center;
+            color: mediumvioletred
+        }
+    </style>
+</head>
+
+<body>
+    <p id="lat">Latitude Coords</p>
+    <p id="lon">Longitude Coords</p>
+
+    <h1 id="CurrentTemp">Current Temp Based on Coords</h1>
+
+    <script>
+        let apiKey = "cff2aa1e3c91c0248805f01bed83e69c";
+        let geoLocationURL = "https://api.openweathermap.org/data/2.5/weather?"
+
+        function showPosition(position) {
+            console.log(position);
+            let currentLatitude = position.coords.latitude;
+            let latitudeNumber = document.querySelector("#lat");
+            latitudeNumber.innerHTML = `${currentLatitude}`;
+
+            let currentLongitude = position.coords.longitude;
+            let longitudeNumber = document.querySelector("#lon");
+            longitudeNumber.innerHTML = `${currentLongitude}`;
+
+            let currentTemp = axios.get(`${geoLocationURL}&lat=${currentLatitude}&lon=${currentLongitude}&appid=${apiKey}&units=imperial`).then(
+
+                function (response) {
+                    console.log(response);
+                    let currentTemp = response.data.main.temp;
+                    let currentTempDisplay = document.querySelector("#CurrentTemp");
+                    currentTempDisplay.innerHTML = `Current Temperature: ${currentTemp}ºF`;
+                })
+        }
+
+        navigator.geolocation.getCurrentPosition(showPosition);
+    </script>
+
+</body>
+
+</html>

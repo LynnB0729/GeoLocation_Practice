@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <h1>GeoLocation</h1>
+    <h2 id="latitude"> current lattitude</h2>
+    <h2 id="longitude"> current logntitude</h2>
+
+    <button>Weather: My Location</button>
+
+    <script>
+        let lat = ""
+        let lon = ""
+        let apiKey = "cff2aa1e3c91c0248805f01bed83e69c"
+
+        let geoLocationURL = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}"
+
+        function showPosition(position) {
+            let showLatitude = document.querySelector("#latitude");
+            showLatitude.innerHTML = `Current latitude is: ${position.coords.latitude}`;
+
+            let showLongitude = document.querySelector("#longitude");
+            showLongitude.innerHTML = `Current longitude is: ${position.coords.longitude}`;
+        }
+
+        function getCurrentPosition() {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        }
+
+        let buttonEvent = document.querySelector("button");
+        buttonEvent.addEventListener("click", getCurrentPosition);
+    </script>
+</body>
+
+</html>
